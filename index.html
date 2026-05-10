@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MALAK - لعبة الحرب الخارقة</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="app">
+        <!-- شاشة تسجيل الدخول -->
+        <div id="loginScreen" class="screen active">
+            <div class="login-container">
+                <h1 class="game-title">MALAK</h1>
+                <p class="tagline">صياد الشياطين</p>
+                <form id="loginForm">
+                    <input type="text" id="username" placeholder="اسم المستخدم" required>
+                    <input type="password" id="password" placeholder="كلمة المرور" required>
+                    <button type="submit" class="btn-primary">دخول</button>
+                    <button type="button" class="btn-secondary" onclick="showRegister()">إنشاء حساب جديد</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- شاشة التسجيل -->
+        <div id="registerScreen" class="screen">
+            <div class="register-container">
+                <h2>إنشاء حساب جديد</h2>
+                <form id="registerForm">
+                    <input type="text" id="regUsername" placeholder="اسم المستخدم" required>
+                    <input type="password" id="regPassword" placeholder="كلمة المرور" required>
+                    <input type="password" id="regPassword2" placeholder="تأكيد كلمة المرور" required>
+                    <button type="submit" class="btn-primary">إنشاء الحساب</button>
+                    <button type="button" class="btn-secondary" onclick="showLogin()">العودة للدخول</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- شاشة القائمة الرئيسية -->
+        <div id="mainMenu" class="screen">
+            <div class="menu-container">
+                <h1 class="game-title">MALAK</h1>
+                <div class="player-info">
+                    <p>مرحباً: <span id="playerName"></span></p>
+                </div>
+                <div class="menu-buttons">
+                    <button class="btn-menu" onclick="startGame()">ابدأ اللعبة</button>
+                    <button class="btn-menu" onclick="showStory()">القصة</button>
+                    <button class="btn-menu" onclick="showSettings()">الإعدادات</button>
+                    <button class="btn-menu" onclick="logout()">تسجيل الخروج</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- شاشة اختيار المستويات -->
+        <div id="levelSelect" class="screen">
+            <div class="level-container">
+                <h2>اختر المرحلة</h2>
+                <div id="levelGrid" class="level-grid"></div>
+                <button class="btn-secondary" onclick="backToMenu()">العودة</button>
+            </div>
+        </div>
+
+        <!-- شاشة اللعبة -->
+        <div id="gameScreen" class="screen">
+            <div class="game-hud">
+                <div class="hud-left">
+                    <div class="player-health">
+                        <span>صحة سام:</span>
+                        <div class="health-bar">
+                            <div id="samHealth" class="health-fill"></div>
+                        </div>
+                        <span id="samHealthText">100/100</span>
+                    </div>
+                    <div class="player-health">
+                        <span>صحة ديان:</span>
+                        <div class="health-bar">
+                            <div id="deanHealth" class="health-fill"></div>
+                        </div>
+                        <span id="deanHealthText">100/100</span>
+                    </div>
+                </div>
+                <div class="hud-center">
+                    <span id="levelName">المرحلة 1</span>
+                    <span id="levelProgress"></span>
+                </div>
+                <div class="hud-right">
+                    <span id="score">النقاط: 0</span>
+                    <span id="enemiesLeft">الأعداء: 0</span>
+                </div>
+            </div>
+            <canvas id="gameCanvas"></canvas>
+            <div class="game-controls">
+                <p>التحكم: WASD للحركة | SPACE للقفز | Z X C للهجوم | Q E للسلاح | ESC للقائمة</p>
+            </div>
+        </div>
+
+        <!-- شاشة نهاية المرحلة -->
+        <div id="levelEnd" class="screen">
+            <div class="level-end-container">
+                <h2 id="endTitle">مرحلة مكتملة!</h2>
+                <div id="levelStats"></div>
+                <div class="end-buttons">
+                    <button class="btn-primary" onclick="nextLevel()">المرحلة القادمة</button>
+                    <button class="btn-secondary" onclick="backToMenu()">العودة للقائمة الرئيسية</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="game.js"></script>
+    <script src="player.js"></script>
+    <script src="enemy.js"></script>
+    <script src="weapons.js"></script>
+    <script src="levels.js"></script>
+    <script src="ui.js"></script>
+</body>
+</html>
