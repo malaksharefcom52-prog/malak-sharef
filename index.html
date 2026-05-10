@@ -3,116 +3,186 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MALAK - لعبة الحرب الخارقة</title>
+    <title>لعبة ملاك - MALAK Game</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div id="app">
-        <!-- شاشة تسجيل الدخول -->
-        <div id="loginScreen" class="screen active">
-            <div class="login-container">
-                <h1 class="game-title">MALAK</h1>
-                <p class="tagline">صياد الشياطين</p>
-                <form id="loginForm">
-                    <input type="text" id="username" placeholder="اسم المستخدم" required>
-                    <input type="password" id="password" placeholder="كلمة المرور" required>
-                    <button type="submit" class="btn-primary">دخول</button>
-                    <button type="button" class="btn-secondary" onclick="showRegister()">إنشاء حساب جديد</button>
-                </form>
-            </div>
-        </div>
-
-        <!-- شاشة التسجيل -->
-        <div id="registerScreen" class="screen">
-            <div class="register-container">
-                <h2>إنشاء حساب جديد</h2>
-                <form id="registerForm">
-                    <input type="text" id="regUsername" placeholder="اسم المستخدم" required>
-                    <input type="password" id="regPassword" placeholder="كلمة المرور" required>
-                    <input type="password" id="regPassword2" placeholder="تأكيد كلمة المرور" required>
-                    <button type="submit" class="btn-primary">إنشاء الحساب</button>
-                    <button type="button" class="btn-secondary" onclick="showLogin()">العودة للدخول</button>
-                </form>
-            </div>
-        </div>
-
-        <!-- شاشة القائمة الرئيسية -->
-        <div id="mainMenu" class="screen">
-            <div class="menu-container">
-                <h1 class="game-title">MALAK</h1>
-                <div class="player-info">
-                    <p>مرحباً: <span id="playerName"></span></p>
+    <!-- شاشة البداية (تسجيل الدخول والتسجيل) -->
+    <div id="loginScreen" class="screen active">
+        <div class="login-container">
+            <h1 class="game-title">🎮 ملاك 🎮</h1>
+            <p class="game-subtitle">لعبة الحرب والأساطير</p>
+            
+            <div class="login-form">
+                <div class="form-group">
+                    <label for="username">اسم المستخدم:</label>
+                    <input type="text" id="username" placeholder="أدخل اسم المستخدم">
                 </div>
-                <div class="menu-buttons">
-                    <button class="btn-menu" onclick="startGame()">ابدأ اللعبة</button>
-                    <button class="btn-menu" onclick="showStory()">القصة</button>
-                    <button class="btn-menu" onclick="showSettings()">الإعدادات</button>
-                    <button class="btn-menu" onclick="logout()">تسجيل الخروج</button>
+                
+                <div class="form-group">
+                    <label for="password">كلمة المرور:</label>
+                    <input type="password" id="password" placeholder="أدخل كلمة المرور">
                 </div>
+                
+                <div class="form-buttons">
+                    <button id="loginBtn" class="btn btn-primary">دخول</button>
+                    <button id="registerBtn" class="btn btn-secondary">تسجيل جديد</button>
+                </div>
+                
+                <div id="loginMessage" class="message"></div>
             </div>
         </div>
+    </div>
 
-        <!-- شاشة اختيار المستويات -->
-        <div id="levelSelect" class="screen">
-            <div class="level-container">
-                <h2>اختر المرحلة</h2>
-                <div id="levelGrid" class="level-grid"></div>
-                <button class="btn-secondary" onclick="backToMenu()">العودة</button>
-            </div>
-        </div>
-
-        <!-- شاشة اللعبة -->
-        <div id="gameScreen" class="screen">
-            <div class="game-hud">
-                <div class="hud-left">
-                    <div class="player-health">
-                        <span>صحة سام:</span>
-                        <div class="health-bar">
-                            <div id="samHealth" class="health-fill"></div>
+    <!-- شاشة اختيار الشخصية -->
+    <div id="characterScreen" class="screen">
+        <div class="character-container">
+            <h1>اختر شخصيتك</h1>
+            <div class="characters-grid">
+                <!-- الشخصية الأولى: أسد الصحراء -->
+                <div class="character-card" data-character="warrior">
+                    <div class="character-image character-1"></div>
+                    <h2>أسد الصحراء</h2>
+                    <p class="character-desc">محارب قوي بقوة عظيمة وأسلحة ثقيلة</p>
+                    <div class="stats">
+                        <div class="stat">
+                            <span>القوة:</span>
+                            <div class="stat-bar">
+                                <div class="stat-fill" style="width: 90%"></div>
+                            </div>
                         </div>
-                        <span id="samHealthText">100/100</span>
-                    </div>
-                    <div class="player-health">
-                        <span>صحة ديان:</span>
-                        <div class="health-bar">
-                            <div id="deanHealth" class="health-fill"></div>
+                        <div class="stat">
+                            <span>السرعة:</span>
+                            <div class="stat-bar">
+                                <div class="stat-fill" style="width: 60%"></div>
+                            </div>
                         </div>
-                        <span id="deanHealthText">100/100</span>
+                        <div class="stat">
+                            <span>الصحة:</span>
+                            <div class="stat-bar">
+                                <div class="stat-fill" style="width: 85%"></div>
+                            </div>
+                        </div>
                     </div>
+                    <button class="btn btn-primary select-character">اختيار</button>
                 </div>
-                <div class="hud-center">
-                    <span id="levelName">المرحلة 1</span>
-                    <span id="levelProgress"></span>
-                </div>
-                <div class="hud-right">
-                    <span id="score">النقاط: 0</span>
-                    <span id="enemiesLeft">الأعداء: 0</span>
-                </div>
-            </div>
-            <canvas id="gameCanvas"></canvas>
-            <div class="game-controls">
-                <p>التحكم: WASD للحركة | SPACE للقفز | Z X C للهجوم | Q E للسلاح | ESC للقائمة</p>
-            </div>
-        </div>
 
-        <!-- شاشة نهاية المرحلة -->
-        <div id="levelEnd" class="screen">
-            <div class="level-end-container">
-                <h2 id="endTitle">مرحلة مكتملة!</h2>
-                <div id="levelStats"></div>
-                <div class="end-buttons">
-                    <button class="btn-primary" onclick="nextLevel()">المرحلة القادمة</button>
-                    <button class="btn-secondary" onclick="backToMenu()">العودة للقائمة الرئيسية</button>
+                <!-- الشخصية الثانية: الظل السريع -->
+                <div class="character-card" data-character="shadow">
+                    <div class="character-image character-2"></div>
+                    <h2>الظل السريع</h2>
+                    <p class="character-desc">محارب سريع براقص وحركات ماهرة</p>
+                    <div class="stats">
+                        <div class="stat">
+                            <span>القوة:</span>
+                            <div class="stat-bar">
+                                <div class="stat-fill" style="width: 70%"></div>
+                            </div>
+                        </div>
+                        <div class="stat">
+                            <span>السرعة:</span>
+                            <div class="stat-bar">
+                                <div class="stat-fill" style="width: 95%"></div>
+                            </div>
+                        </div>
+                        <div class="stat">
+                            <span>الصحة:</span>
+                            <div class="stat-bar">
+                                <div class="stat-fill" style="width: 65%"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary select-character">اختيار</button>
                 </div>
             </div>
         </div>
     </div>
 
-    <script src="game.js"></script>
+    <!-- شاشة المستويات -->
+    <div id="levelScreen" class="screen">
+        <div class="level-container">
+            <h1>المراحل</h1>
+            <div class="levels-grid">
+                <!-- سيتم ملأها ديناميكياً -->
+            </div>
+        </div>
+    </div>
+
+    <!-- شاشة اللعبة الرئيسية -->
+    <div id="gameScreen" class="screen">
+        <div class="game-header">
+            <div class="player-info">
+                <span id="playerName">اسم اللاعب</span>
+                <span id="levelTitle">المرحلة 1</span>
+            </div>
+            <div class="game-stats">
+                <div class="stat-item">
+                    <span>الحياة:</span>
+                    <div class="health-bar">
+                        <div id="healthFill" class="health-fill"></div>
+                    </div>
+                    <span id="healthText">100/100</span>
+                </div>
+                <div class="stat-item">
+                    <span>النقاط:</span>
+                    <span id="score">0</span>
+                </div>
+                <div class="stat-item">
+                    <span>الموجة:</span>
+                    <span id="wave">1</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- لوحة اللعبة -->
+        <canvas id="gameCanvas" width="1200" height="600"></canvas>
+
+        <div class="game-controls">
+            <div class="keyboard-controls">
+                <p>التحكم: الأسهم أو WASD + مسافة (قفز) + E (هجوم) + Q (سلاح)</p>
+            </div>
+            <div class="game-buttons">
+                <button id="pauseBtn" class="btn btn-secondary">إيقاف مؤقت</button>
+                <button id="menuBtn" class="btn btn-secondary">القائمة الرئيسية</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- شاشة الإيقاف المؤقت -->
+    <div id="pauseScreen" class="screen">
+        <div class="pause-container">
+            <h1>اللعبة موقوفة</h1>
+            <div class="pause-buttons">
+                <button id="resumeBtn" class="btn btn-primary">استئناف اللعبة</button>
+                <button id="restartBtn" class="btn btn-secondary">إعادة المستوى</button>
+                <button id="exitBtn" class="btn btn-danger">الخروج</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- شاشة النهاية -->
+    <div id="endScreen" class="screen">
+        <div class="end-container">
+            <h1 id="endTitle">انتهت اللعبة</h1>
+            <div class="end-stats">
+                <p>النقاط النهائية: <span id="finalScore">0</span></p>
+                <p>المستوى الوصول إليه: <span id="finalLevel">1</span></p>
+            </div>
+            <div class="end-buttons">
+                <button id="restartGameBtn" class="btn btn-primary">لعبة جديدة</button>
+                <button id="mainMenuBtn" class="btn btn-secondary">القائمة الرئيسية</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- الملفات الأساسية -->
+    <script src="config.js"></script>
+    <script src="auth.js"></script>
     <script src="player.js"></script>
     <script src="enemy.js"></script>
     <script src="weapons.js"></script>
     <script src="levels.js"></script>
     <script src="ui.js"></script>
+    <script src="game.js"></script>
 </body>
 </html>
